@@ -1,0 +1,76 @@
+#+title: ЧаВО
+#+author: Stanislaw Karkavin
+#+email: me@xdefrag.dev
+#+language: ru
+#+description: Частые вопросы-ответы по тестовому заданию.
+
+** Структура
+Не самая лучшая идея брать за пример структуру из
+https://github.com/golang-standards/project-layout.
+
+- [[https://github.com/golang-standards/project-layout/issues/36][Delete this repo]]
+- [[https://github.com/golang-standards/project-layout/issues/41][This repository has multiple serious issues]]
+- [[https://github.com/golang-standards/project-layout/issues/38][No, it's not golang-standards]]
+- [[https://github.com/golang-standards/project-layout/issues/10][pkg directory should not be recommended for use]]
+
+Неплохие примеры структуры можно подсмотреть тут:
+
+- [[https://github.com/peterbourgon/gattaca][peterbourgon/gattaca]]
+- [[https://github.com/kelseyhightower/helloworld][kelseyhightower/helloworld]]
+- [[https://github.com/rsc/todo][rsc/todo]]
+
+Плюс отличный talk на эту тему:
+
+- [[https://www.youtube.com/watch?v=MzTcsI6tn-0][Brian Ketelsen - Go best practices]]
+
+** Имена модулей
+Стоит избегать ничего не говорящих имен пакетов: data, domain, util,
+misc etc.
+
+- [[https://golang.org/doc/effective_go.html#names][Effective Go / Names]]
+
+** Модули
+Файл go.sum содержит информацию о версиях использованных модулей,
+поэтому его обязательно необходимо включать в репозиторий. 
+
+- [[https://github.com/golang/go/wiki/Modules#should-i-commit-my-gosum-file-as-well-as-my-gomod-file][Modules/Should I commit my 'go.sum' file as well as my 'go.mod' file?]]
+
+** Конфигурация
+По 12-factor app хорошим тоном является использование переменных
+окружения. 
+
+- [[https://12factor.net/config][The Twelve-Factor App / Config]]
+
+** Зависимости
+Не самая хорошая идея для простых задач использовать фреймворки с
+кучей зависимостей. Стоит сводить зависимости к минимуму. В текущем
+приложении вполне возможно было обойтись драйвером [[https://github.com/streadway/amqp][streadway/amqp]] и
+тулкитом к протобафам [[https://github.com/protocolbuffers/protobuf][protocolbuffers/protobuf]], все остальное
+реализовывается простыми сниппетами кода. К примеру, вместо
+spf13/viper можно использовать стандартную функцию os.Getenv и сниппет
+с возможностью выставления дефолтного значения.
+
+Подобные действия очень сильно снижают сложность проекта:
+меньше зависимостей -> меньше кода -> меньше чтения и поддержки кода.
+
+- [[https://www.youtube.com/watch?v=PAAkCSZUG1c&t=9m28s][Rob Pike - Go Proverbs / A little copying is better than little dependency]]
+- [[https://youtu.be/rFejpH_tAHM][Rob Pike - Simplicity is Complicated]]
+
+** Запуск приложения
+Паниковать при ошибках подключения к инфраструктуре в целом хорошая
+идея, если это происходит при старте. Только стоит учесть это в
+деплойменте и перезапускать контейнер с таймаутом.
+
+** GoImports
+Предпочтительней использовать GoImport вместо GoFmt при сохранении
+файла.
+
+- [[https://godoc.org/golang.org/x/tools/cmd/goimports][GoImports]]
+
+** Линтеры
+При разработке стоит использовать комплексные линтеры с
+предпочитаемыми настройками. Остальные недочеты в коде можно увидеть
+просто запустив GolangCI-Lint, к примеру, с дефолтными настройками.
+
+- [[https://github.com/golangci/golangci-lint][GolangCI-Lint]]
+
